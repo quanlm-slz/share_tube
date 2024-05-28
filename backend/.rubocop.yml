@@ -19,3 +19,6 @@ AllCops:
     - 'tmp/**/*'
     - '*'
     - 'bin/**/*'
+
+Style/Documentation:
+  Enabled: false
