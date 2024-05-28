@@ -13,6 +13,17 @@ services:
                       rails s -p 3000 -b '0.0.0.0'"
     depends_on:
       - db
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: development.Dockerfile
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./frontend/:/app/
+    command: bash -c "npm run dev"
+    ports:
+      - 8080:8080
   db:
     image: postgres
     volumes:
