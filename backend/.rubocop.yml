@@ -1,0 +1,21 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.2
+  DisabledByDefault: false
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'vendor/**/*'
+    - 'storage/**/*'
+    - 'public/**/*'
+    - 'log/**/*'
+    - 'spec/*'
+    - 'lib/tasks/**/*'
+    - 'tmp/**/*'
+    - '*'
+    - 'bin/**/*'
