@@ -8,8 +8,21 @@ Devise.setup do |config|
 
   config.case_insensitive_keys = [:email]
   config.strip_whitespace_keys = [:email]
-  config.skip_session_storage = [:http_auth]
 
+  config.jwt do |jwt|
+    jwt.secret = Rails.application.credentials.jwt_secret_key
+    jwt.dispatch_requests = [
+      ['POST', 'user/sign_up'],
+      ['POST', 'user/sign_in']
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', 'user/sign_out']
+    ]
+  end
+
+  config.warden do |manager|
+    manager.failure_app = FailureApp
+  end
 
   config.stretches = Rails.env.test? ? 1 : 12
 

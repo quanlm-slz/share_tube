@@ -1,16 +1,36 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "User::Registrations", type: :request do
+RSpec.describe 'User::Registrations' do
   let(:user) { attributes_for(:user) }
   let(:body) do
     {
-      user: user
+      user:
     }
   end
 
-  describe "POST /sign_up" do
+  describe 'POST user/sign_up' do
     let(:request) { post '/user/sign_up', params: body }
-    
-    it { expect { request } .to change(User, :count).by(1) }
+
+    context 'when given insufficient data response' do
+      let(:body) { { email: 'test@example.com' } }
+
+      before { request }
+
+      it_behaves_like('error_response', 422)
+    end
+
+    context 'when given sufficient data request' do
+      it { expect { request }.to change(User, :count).by(1) }
+    end
+
+    context 'when given sufficient data response' do
+      before { request }
+
+      it_behaves_like('success_response')
+
+      it { expect(json_body.dig('data', 'token')).not_to be_blank }
+    end
   end
 end

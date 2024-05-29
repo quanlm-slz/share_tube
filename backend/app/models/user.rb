@@ -24,8 +24,15 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :jwt_authenticatable, jwt_revocation_strategy: Denylist
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :username, length: { maximum: 50 }
+
+  attr_reader :token
+
+  def on_jwt_dispatch(_token, _opts)
+    @token = 'Bearer ${token}'
+  end
 end
