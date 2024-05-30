@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::API
   include ErrorHandler
   include SuccessHandler
+  include ParamsHandler
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 

@@ -2,6 +2,8 @@ class SharesController < ApplicationController
   before_action :authenticate_user!, only: :create
 
   def index
+    shares = Share.fetch_page(index_params)
+    paginated_response(shares)
   end
 
   def create
