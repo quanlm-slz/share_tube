@@ -52,5 +52,13 @@ RSpec.describe 'User::Sessions' do
 
       it { expect { request }.to change(Denylist, :count).by(1) }
     end
+
+    context 'when user signed out response' do
+      include_context 'when user signed in'
+
+      before { request }
+
+      it_behaves_like 'success_response'
+    end
   end
 end

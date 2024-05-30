@@ -31,4 +31,8 @@ RSpec.describe User do
     it { expect(user).to validate_uniqueness_of(:username).case_insensitive }
     it { expect(user).to validate_length_of(:username).is_at_most(50) }
   end
+
+  describe 'association' do
+    it { expect(user).to have_many(:shares).dependent(:destroy) }
+  end
 end

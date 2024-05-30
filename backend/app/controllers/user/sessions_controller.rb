@@ -2,7 +2,7 @@
 
 class User::SessionsController < Devise::SessionsController
   def respond_to_on_destroy
-    head :no_content
+    success_response("User signed out successfully")
   end
 
   def respond_with(user, **_opts)

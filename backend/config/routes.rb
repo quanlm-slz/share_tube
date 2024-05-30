@@ -9,5 +9,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :shares, only: [:create, :index]
+
   get "up" => "rails/health#show", as: :rails_health_check
 end

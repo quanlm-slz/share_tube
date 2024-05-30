@@ -27,12 +27,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: Denylist
 
+  has_many :shares, dependent: :destroy
+
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :username, length: { maximum: 50 }
 
   attr_reader :token
 
-  def on_jwt_dispatch(_token, _opts)
-    @token = 'Bearer ${token}'
+  def on_jwt_dispatch(token, _opts)
+    @token = "Bearer #{token}"
   end
 end
