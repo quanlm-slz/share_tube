@@ -20,7 +20,7 @@ module SuccessHandler
         status:,
         message: 'success',
         data: {
-          items:,
+          items: ActiveModelSerializers::SerializableResource.new(items),
           pagination: {
             current_page: items.current_page,
             next_page: items.next_page,
