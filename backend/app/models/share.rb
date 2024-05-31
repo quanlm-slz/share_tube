@@ -15,7 +15,18 @@
 #
 class Share < ApplicationRecord
   belongs_to :user
+  after_save :broadcast_share_creation, if: :id_previously_changed?
 
   validates_presence_of :url
   validates_presence_of :description
+
+  def broadcast_share_creation
+    ActionCable.server.broadcast(
+      "notification_channel",
+      {
+        type: "new notification",
+        username: user.username
+      }
+    )
+  end
 end

@@ -43,14 +43,14 @@
 
 ### Success Response
 
-``json
+```json
 {
 "status": 200,
 "message": "success",
 "data": "data"
 }
 
-``
+```
 
 ### Paginated Response
 
@@ -77,11 +77,10 @@
 {
   "indentifier": "{
     \"channel\": channel,
-    \"guid\": uuid
   }",
   "message": {
-    "status": "success",
-    "data": "data"
+    "type": "type",
+    "other_payload": "other_payload"
   }
 }
 ```
@@ -91,3 +90,23 @@
 ### User end points: [link](./endpoints/user-endpoints.md)
 
 ### Shares end points: [link](./endpoints/share-endpoints.md)
+
+## Socket end points `/cable`
+
+Allow user to receive socket message from backend
+After subscription confirmed client can receive web socket format
+
+### Identifier:
+
+```json
+{ "channel": "NotificationChannel" }
+```
+
+### Message format:
+
+```json
+{
+  "type": "new notification",
+  "username": "username"
+}
+```
