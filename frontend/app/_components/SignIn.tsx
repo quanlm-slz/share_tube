@@ -1,8 +1,10 @@
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const SignIn: React.FC<{ submit: (email: string, password: string) => {} }> = ({
   submit,
 }) => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -26,6 +28,12 @@ const SignIn: React.FC<{ submit: (email: string, password: string) => {} }> = ({
         onClick={() => submit(email, password)}
       >
         Login
+      </button>
+      <button
+        className="bg-stone-200 shadow-sm rounded-md border border-stone-700 px-6 py-auto hover:bg-stone-400"
+        onClick={() => router.push("/register")}
+      >
+        Register
       </button>
     </div>
   );

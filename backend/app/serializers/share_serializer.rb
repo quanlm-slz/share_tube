@@ -1,4 +1,7 @@
 class ShareSerializer < ActiveModel::Serializer
-  attributes :id
-  belongs_to :user
+  attributes :id, :url, :description, :username
+
+  def username
+    object.user.username
+  end
 end

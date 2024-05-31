@@ -2,31 +2,18 @@ import { useContext, useState } from "react";
 import AuthContext from "./AuthContext";
 import SignIn from "./SignIn";
 import SignOut from "./SignOut";
+import { signInRequest, signOutRequest } from "@/lib/user";
 
 const Header: React.FC = () => {
   const authContext = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const { token, email, addToken, removeToken, addEmail, removeEmail } =
-    authContext!;
+  const { token, user, removeToken, addUser } = authContext!;
 
   const signIn = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/user/sign_in", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          user: {
-            email,
-            password,
-          },
-        }),
-      });
-      const data = await response.json();
-      addToken(data?.data?.token);
-      addEmail(data?.data?.email);
+      const data = await signInRequest(email, password);
+      addUser(data?.data);
     } finally {
       setLoading(false);
     }
@@ -35,15 +22,8 @@ const Header: React.FC = () => {
   const signOut = async () => {
     setLoading(true);
     try {
-      await fetch("http://localhost:3000/user/sign_out", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token || "",
-        },
-        method: "DELETE",
-      });
+      await signOutRequest(token || "");
       removeToken();
-      removeEmail();
     } finally {
       setLoading(false);
     }
@@ -53,7 +33,7 @@ const Header: React.FC = () => {
       <h1 className="text-3xl font-bold my-auto">FUNNY MOVIES</h1>
       {!loading &&
         (token ? (
-          <SignOut submit={signOut} email={email} />
+          <SignOut submit={signOut} email={user?.email} />
         ) : (
           <SignIn submit={signIn} />
         ))}
