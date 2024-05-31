@@ -3,6 +3,7 @@ import AuthContext from "./AuthContext";
 import SignIn from "./SignIn";
 import SignOut from "./SignOut";
 import { signInRequest, signOutRequest } from "@/lib/user";
+import Notification from "./Notification";
 
 const Header: React.FC = () => {
   const authContext = useContext(AuthContext);
@@ -31,12 +32,15 @@ const Header: React.FC = () => {
   return (
     <div className="w-auto h-16 sticky flex mx-8 justify-between">
       <h1 className="text-3xl font-bold my-auto">FUNNY MOVIES</h1>
-      {!loading &&
-        (token ? (
-          <SignOut submit={signOut} email={user?.email} />
-        ) : (
-          <SignIn submit={signIn} />
-        ))}
+      <div className="flex gap-5">
+        {!loading &&
+          (token ? (
+            <SignOut submit={signOut} email={user?.email} />
+          ) : (
+            <SignIn submit={signIn} />
+          ))}
+        <Notification />
+      </div>
     </div>
   );
 };

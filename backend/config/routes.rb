@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   post "users/me", to: "users#me"
   resources :shares, only: [:create, :index]
 
+  mount ActionCable.server => '/cable'
   get "up" => "rails/health#show", as: :rails_health_check
 end
