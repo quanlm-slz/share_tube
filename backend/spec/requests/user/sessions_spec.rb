@@ -12,7 +12,7 @@ RSpec.describe 'User::Sessions' do
       }
     }
   end
-
+  
   describe 'POST user/sign_in' do
     let(:request) { post '/user/sign_in', params: body }
 

@@ -1,5 +1,22 @@
 ## [Back to backend doc](../backend-api-doc.md)
 
+## End point: `GET /users/me`
+
+### Description
+
+- Allow user to fetch token data
+
+### Response data:
+
+```json
+{
+  "username": "username",
+  "email": "email@test.com",
+  "created_at": "created_at",
+  "updated_at": "updated_at"
+}
+```
+
 ## End point: `POST /users/sign_up'
 
 ### Description
