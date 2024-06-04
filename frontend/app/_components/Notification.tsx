@@ -4,7 +4,7 @@ const Notification: React.FC = () => {
   const [message, setMessage] = useState<string>();
   const identifier = JSON.stringify({ channel: "NotificationChannel" });
 
-  const socket = new WebSocket("ws://localhost:3000/cable");
+  const socket = new WebSocket(`${process.env.NEXT_PUBLIC_SOCKET_SERVER}/cable`);
   socket.onopen = () => {
     socket.send(
       JSON.stringify({
@@ -25,7 +25,11 @@ const Notification: React.FC = () => {
   };
 
   useEffect(() => {
-    return socket.close();
+    return () => {
+      if (socket.readyState === 1) {
+        socket.close();
+      }
+    }
   });
   return (
     <div className="relative h-full my-2">
